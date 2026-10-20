@@ -1,0 +1,633 @@
+{
+  "info": {
+    "name": "MustPayroll fixed — API Testing and UI Setup",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "For the fixed application only. Import into Postman and keep baseUrl at http://127.0.0.1:4176. Send requests individually; no scripts or runner are required. Each create request returns payrollDatasetId, the internal identifier for an isolated test dataset. Later API requests and the browser link use that identifier; the interface provides no dataset-management controls. After creating records, copy the returned payrollDatasetId into the collection variable payrollDatasetId and Save. TC03 and TC04 are the two API cases. PAY-001/PAY-003 and PAY-002 reproduce the three existing UI defects; UI setup only prepares the six browser cases. Use the other build’s own collection for its checks."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:4176",
+      "type": "string",
+      "description": "The fixed service address: http://127.0.0.1:4176. GET {{baseUrl}}/api/health must identify this build."
+    },
+    {
+      "key": "payrollDatasetId",
+      "value": "",
+      "type": "string",
+      "description": "Copy the top-level payrollDatasetId returned by POST {{baseUrl}}/api/payroll-datasets. Save before subsequent requests; create a new test dataset for each case."
+    }
+  ],
+  "item": [
+    {
+      "name": "00. Check running build",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/health",
+        "description": "Expected: 200 OK, application MustPayroll, build.variant fixed at port 4176. Retain build.id. Stop if this is not the fixed application."
+      },
+      "response": []
+    },
+    {
+      "name": "UI setup only",
+      "description": "Create starting records for the six browser cases. These requests do not execute payroll and are not extra API test cases.",
+      "item": [
+        {
+          "name": "TC01 | Earnings entry and approval",
+          "description": "Create an empty earning list, then record seven earnings in the browser. Use Approve earnings and Reject earnings to establish TC01’s final statuses before processing payroll.",
+          "item": [
+            {
+              "name": "1. Create fresh payroll records",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/api/payroll-datasets",
+                "description": "Expected: 201 Created. Copy the top-level payrollDatasetId from this response into the collection variable payrollDatasetId, then Save. This isolates this case from every earlier payment. Do not reuse an ID from another case or build.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"testDataPreset\": \"employeesOnly\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "TC02 | Period boundaries",
+          "description": "Create the four approved earnings around the opening and closing Monday boundaries. Save the returned payrollDatasetId and open {{baseUrl}}/pay-runs?payrollDatasetId={{payrollDatasetId}} in the browser, replacing both placeholders. Follow TC02 in functional-test-suite.md; these requests only prepare its data.",
+          "item": [
+            {
+              "name": "1. Create fresh payroll records",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/api/payroll-datasets",
+                "description": "Expected: 201 Created. Copy the top-level payrollDatasetId from this response into the collection variable payrollDatasetId, then Save. This isolates this case from every earlier payment. Do not reuse an ID from another case or build.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"testDataPreset\": \"payPeriodBoundaryEarnings\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "TC05 | Payment failure",
+          "description": "Create Amara’s approved $1,500 earning, then send request 2 once to fail the next payment attempt. Save payrollDatasetId and open {{baseUrl}}/pay-runs?payrollDatasetId={{payrollDatasetId}} in the browser, replacing both placeholders. Follow TC05 in functional-test-suite.md. Do not arm the failure again before payroll retry.",
+          "item": [
+            {
+              "name": "1. Create fresh payroll records",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/api/payroll-datasets",
+                "description": "Expected: 201 Created. Copy the top-level payrollDatasetId from this response into the collection variable payrollDatasetId, then Save. This isolates this case from every earlier payment. Do not reuse an ID from another case or build.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"testDataPreset\": \"oneApprovedEarning\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2. Make the first payment attempt fail once",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}/test-controls/next-failure",
+                "description": "Expected: 200 OK. Only the next payment attempt fails. Do not send this again before retrying payroll.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"failureType\": \"paymentRecording\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "TC06 | Delivery failure",
+          "description": "Create Amara’s approved $1,500 earning, then send request 2 once to fail the next notification attempt. Save payrollDatasetId and open {{baseUrl}}/pay-runs?payrollDatasetId={{payrollDatasetId}} in the browser, replacing both placeholders. Follow TC06 in functional-test-suite.md. Buggy creates no notification work, so the delivery failure is not reached.",
+          "item": [
+            {
+              "name": "1. Create fresh payroll records",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/api/payroll-datasets",
+                "description": "Expected: 201 Created. Copy the top-level payrollDatasetId from this response into the collection variable payrollDatasetId, then Save. This isolates this case from every earlier payment. Do not reuse an ID from another case or build.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"testDataPreset\": \"oneApprovedEarning\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2. Make the first delivery attempt fail once",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}/test-controls/next-failure",
+                "description": "Expected: 200 OK. Only the next notification attempt fails. In buggy, notification work is absent, so this delivery condition is never reached.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"failureType\": \"notificationDelivery\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "TC07 and TC08 | Normal payment",
+          "description": "Create Amara’s approved $1,500 earning with no failure setup. Save payrollDatasetId and open {{baseUrl}}/pay-runs?payrollDatasetId={{payrollDatasetId}} in the browser, replacing both placeholders. Follow TC07 or TC08 in functional-test-suite.md, creating a new test dataset for each case and build.",
+          "item": [
+            {
+              "name": "1. Create fresh payroll records",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/api/payroll-datasets",
+                "description": "Expected: 201 Created. Copy the top-level payrollDatasetId from this response into the collection variable payrollDatasetId, then Save. This isolates this case from every earlier payment. Do not reuse an ID from another case or build.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"testDataPreset\": \"oneApprovedEarning\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TC03 | UTC period selection",
+      "description": "Manual case. Send requests 1–4 in order. Inspect each response using TC03 in api-test-suite.md. Both builds should pass this timezone rule.",
+      "item": [
+        {
+          "name": "1. Create fresh payroll records",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/payroll-datasets",
+            "description": "Expected: 201 Created. Copy the top-level payrollDatasetId from this response into the collection variable payrollDatasetId, then Save. This isolates this case from every earlier payment. Do not reuse an ID from another case or build.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"testDataPreset\": \"employeesOnly\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Import earnings with timezone offsets",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}/earnings",
+            "description": "Expected: 200 OK. outside.earnedAt becomes 2026-10-04T23:30:00.000Z; inside.earnedAt becomes 2026-10-05T00:00:00.000Z. Only inside is in the selected week.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"earnings\": [\n    {\n      \"earningId\": \"outside\",\n      \"employeeId\": \"emp-001\",\n      \"description\": \"Weekly project earnings\",\n      \"earnedAt\": \"2026-10-05T00:30:00+01:00\",\n      \"amountCents\": 150000,\n      \"approvalStatus\": \"approved\"\n    },\n    {\n      \"earningId\": \"inside\",\n      \"employeeId\": \"emp-001\",\n      \"description\": \"Weekly project earnings\",\n      \"earnedAt\": \"2026-10-05T01:00:00+01:00\",\n      \"amountCents\": 150000,\n      \"approvalStatus\": \"approved\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Process 13 October payroll",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}/pay-runs",
+            "description": "Expected: 200 OK. Both timestamps explicitly simulate Tuesday 13 October 2026 at 09:00 UTC. This action records local payments; it does not depend on the workstation date.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scheduledPayRunAt\": \"2026-10-13T09:00:00.000Z\",\n  \"simulatedProcessingAt\": \"2026-10-13T09:00:00.000Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4. Inspect earnings and payment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}?scheduledPayRunAt=2026-10-13T09:00:00.000Z",
+            "description": "Expected: 200 OK. Check the normalized earnedAt values, employeePayrollSummaries[].earningIds, approvedTotalCents and recordedPaymentTotalCents. Only inside contributes to one 150000-cent payment. Notification creation is covered separately by TC08."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "TC04 | Duplicate earning import",
+      "description": "Manual case. Send requests 1–4 in order. The initial records already contain earn-001. Reimporting the same ID must not increase the payable amount. Both builds should pass.",
+      "item": [
+        {
+          "name": "1. Create fresh payroll records",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/payroll-datasets",
+            "description": "Expected: 201 Created. Copy the top-level payrollDatasetId from this response into the collection variable payrollDatasetId, then Save. This isolates this case from every earlier payment. Do not reuse an ID from another case or build.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"testDataPreset\": \"oneApprovedEarning\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Reimport two identical copies of earn-001",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}/earnings",
+            "description": "Expected: 200 OK; earnings contains one earn-001, not three; recordedPaymentTotalCents stays 0 before payroll processing.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"earnings\": [\n    {\n      \"earningId\": \"earn-001\",\n      \"employeeId\": \"emp-001\",\n      \"description\": \"Weekly project earnings\",\n      \"earnedAt\": \"2026-10-08T12:00:00Z\",\n      \"amountCents\": 150000,\n      \"approvalStatus\": \"approved\"\n    },\n    {\n      \"earningId\": \"earn-001\",\n      \"employeeId\": \"emp-001\",\n      \"description\": \"Weekly project earnings\",\n      \"earnedAt\": \"2026-10-08T12:00:00Z\",\n      \"amountCents\": 150000,\n      \"approvalStatus\": \"approved\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Process 13 October payroll",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}/pay-runs",
+            "description": "Expected: 200 OK. Both timestamps explicitly simulate Tuesday 13 October 2026 at 09:00 UTC. This action records local payments; it does not depend on the workstation date.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scheduledPayRunAt\": \"2026-10-13T09:00:00.000Z\",\n  \"simulatedProcessingAt\": \"2026-10-13T09:00:00.000Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4. Inspect earnings and payment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}?scheduledPayRunAt=2026-10-13T09:00:00.000Z",
+            "description": "Expected: 200 OK. Check one earn-001 remains, employeePayrollSummaries[].earningIds contains it once, and one payment records 150000 cents. Approved and recorded totals are both 150000. Notification creation is covered separately by TC08."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "PAY-001 and PAY-003 | Missing notification and duplicate payment",
+      "description": "Alternative HTTP reproduction of two existing defects, not additional assessment cases. PAY-003: steps 1-5 inspect saved notification work and notification-only recovery (TC08). PAY-001: continue through steps 6-7 to inspect payroll retry and payment identity (TC07). Keep the original paymentId. Buggy: no notification, then two payments totaling 300000 cents. Fixed: one payment totaling 150000 cents and its original linked Sent notification.",
+      "item": [
+        {
+          "name": "1. Create fresh payroll records",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/payroll-datasets",
+            "description": "Expected: 201 Created. Copy the top-level payrollDatasetId from this response into the collection variable payrollDatasetId, then Save. This isolates this case from every earlier payment. Do not reuse an ID from another case or build.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"testDataPreset\": \"oneApprovedEarning\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Record the first payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}/pay-runs",
+            "description": "Expected: 200 OK. Both timestamps explicitly simulate Tuesday 13 October 2026 at 09:00 UTC. This action records local payments; it does not depend on the workstation date.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scheduledPayRunAt\": \"2026-10-13T09:00:00.000Z\",\n  \"simulatedProcessingAt\": \"2026-10-13T09:00:00.000Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Keep the original payment and notification IDs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}?scheduledPayRunAt=2026-10-13T09:00:00.000Z",
+            "description": "Expected: 200 OK. Inspect approvedTotalCents, recordedPaymentTotalCents, employeePayrollSummaries[].earningIds, payments and notifications. Amounts are integer USD cents: 150000 represents $1,500.00. Follow the relevant case or defect comparison; a 200 response alone is not a PASS."
+          },
+          "response": []
+        },
+        {
+          "name": "4. Retry pending notifications",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}/notifications/retry-pending",
+            "description": "Expected: 200 OK. This action handles existing pending work. It cannot create a missing instruction: buggy remains without notification records. It must never add a payment.",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "5. Confirm notification retry did not add a payment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}?scheduledPayRunAt=2026-10-13T09:00:00.000Z",
+            "description": "Expected: 200 OK. Inspect approvedTotalCents, recordedPaymentTotalCents, employeePayrollSummaries[].earningIds, payments and notifications. Amounts are integer USD cents: 150000 represents $1,500.00. Follow the relevant case or defect comparison; a 200 response alone is not a PASS."
+          },
+          "response": []
+        },
+        {
+          "name": "6. Retry the same pay run",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}/pay-runs",
+            "description": "Expected: 200 OK. Both timestamps explicitly simulate Tuesday 13 October 2026 at 09:00 UTC. This action records local payments; it does not depend on the workstation date.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scheduledPayRunAt\": \"2026-10-13T09:00:00.000Z\",\n  \"simulatedProcessingAt\": \"2026-10-13T09:00:00.000Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "7. Compare payment amounts and identities",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}?scheduledPayRunAt=2026-10-13T09:00:00.000Z",
+            "description": "Expected: 200 OK. Inspect approvedTotalCents, recordedPaymentTotalCents, employeePayrollSummaries[].earningIds, payments and notifications. Amounts are integer USD cents: 150000 represents $1,500.00. Follow the relevant case or defect comparison; a 200 response alone is not a PASS."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "PAY-002 | Earnings paid without approval",
+      "description": "Alternative HTTP reproduction of TC01, not a new assessment case. The payload contains four approved earnings, one current-period pending bonus, one rejected claim and one next-period pending earning. Approved total is 435000 cents. Buggy pays 510000; fixed pays 435000.",
+      "item": [
+        {
+          "name": "1. Create fresh payroll records",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/payroll-datasets",
+            "description": "Expected: 201 Created. Copy the top-level payrollDatasetId from this response into the collection variable payrollDatasetId, then Save. This isolates this case from every earlier payment. Do not reuse an ID from another case or build.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"testDataPreset\": \"employeesOnly\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Import the approval-control records",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}/earnings",
+            "description": "Expected: 200 OK; seven earnings and no payment. Four approved current-period records total 435000 cents. The pending 50,000-cent bonus and rejected 25,000-cent claim must not be paid.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"earnings\": [\n    {\n      \"earningId\": \"rejected-claim\",\n      \"employeeId\": \"emp-001\",\n      \"description\": \"Rejected claim\",\n      \"earnedAt\": \"2026-10-08T12:00:00Z\",\n      \"amountCents\": 25000,\n      \"approvalStatus\": \"rejected\"\n    },\n    {\n      \"earningId\": \"amara-weekly\",\n      \"employeeId\": \"emp-001\",\n      \"description\": \"Weekly project earnings\",\n      \"earnedAt\": \"2026-10-08T12:00:00Z\",\n      \"amountCents\": 120000,\n      \"approvalStatus\": \"approved\"\n    },\n    {\n      \"earningId\": \"amara-bonus\",\n      \"employeeId\": \"emp-001\",\n      \"description\": \"Approved delivery bonus\",\n      \"earnedAt\": \"2026-10-09T15:00:00Z\",\n      \"amountCents\": 30000,\n      \"approvalStatus\": \"approved\"\n    },\n    {\n      \"earningId\": \"daniel-weekly\",\n      \"employeeId\": \"emp-002\",\n      \"description\": \"Weekly project earnings\",\n      \"earnedAt\": \"2026-10-09T12:00:00Z\",\n      \"amountCents\": 200000,\n      \"approvalStatus\": \"approved\"\n    },\n    {\n      \"earningId\": \"zara-weekly\",\n      \"employeeId\": \"emp-003\",\n      \"description\": \"Weekly project earnings\",\n      \"earnedAt\": \"2026-10-10T12:00:00Z\",\n      \"amountCents\": 85000,\n      \"approvalStatus\": \"approved\"\n    },\n    {\n      \"earningId\": \"zara-next\",\n      \"employeeId\": \"emp-003\",\n      \"description\": \"Next period project earnings\",\n      \"earnedAt\": \"2026-10-12T08:00:00Z\",\n      \"amountCents\": 85000,\n      \"approvalStatus\": \"pending\"\n    },\n    {\n      \"earningId\": \"amara-pending\",\n      \"employeeId\": \"emp-001\",\n      \"description\": \"Unapproved bonus\",\n      \"earnedAt\": \"2026-10-09T16:00:00Z\",\n      \"amountCents\": 50000,\n      \"approvalStatus\": \"pending\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Process 13 October payroll",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}/pay-runs",
+            "description": "Expected: 200 OK. Both timestamps explicitly simulate Tuesday 13 October 2026 at 09:00 UTC. This action records local payments; it does not depend on the workstation date.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scheduledPayRunAt\": \"2026-10-13T09:00:00.000Z\",\n  \"simulatedProcessingAt\": \"2026-10-13T09:00:00.000Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4. Inspect earnings and payment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/payroll-datasets/{{payrollDatasetId}}?scheduledPayRunAt=2026-10-13T09:00:00.000Z",
+            "description": "Expected: 200 OK. Inspect approvedTotalCents, recordedPaymentTotalCents, employeePayrollSummaries[].earningIds, payments and notifications. Amounts are integer USD cents: 150000 represents $1,500.00. Follow the relevant case or defect comparison; a 200 response alone is not a PASS."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

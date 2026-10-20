@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aniekanetim/MustPayroll.git"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "name": "mustpayroll-buggy-functional-tests",
+  "description": "Run the six UI functional cases against the MustPayroll buggy application.",
+  "scripts": {
+    "build:app": "tsx scripts/build.ts",
+    "test": "playwright test --config playwright.config.ts",
+    "scenario": "tsx scripts/scenario.ts",
+    "verify": "tsc --noEmit && tsx scripts/verify.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^22.20.5",
+    "tsx": "4.23.15",
+    "typescript": "^5.6.3"
+  }
+}

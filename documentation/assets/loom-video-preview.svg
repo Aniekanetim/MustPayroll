@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-labelledby="title description">
+  <title id="title">Watch Aniekan Etim's Loom video: Preventing Defects, Using AI for QA</title>
+  <desc id="description">A professional QA case, AI use and personal ownership. Select this preview to open the recording on Loom.</desc>
+  <rect width="800" height="450" rx="18" fill="#14303d"/>
+  <rect x="48" y="46" width="126" height="32" rx="6" fill="#254754"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="111" y="67" text-anchor="middle" fill="#c6f3e8" font-size="13" font-weight="700" letter-spacing="1.1">LOOM VIDEO</text>
+    <text x="48" y="153" fill="#ffffff" font-size="42" font-weight="700">Preventing defects.</text>
+    <text x="48" y="207" fill="#ffffff" font-size="42" font-weight="700">Using AI in QA.</text>
+    <text x="48" y="257" fill="#cbdbe1" font-size="17">Professional case · AI use · Personal ownership</text>
+    <text x="48" y="371" fill="#ffffff" font-size="20" font-weight="700">Aniekan Etim</text>
+    <text x="48" y="399" fill="#cbdbe1" font-size="15">Software Quality Assurance Engineer</text>
+    <text x="698" y="287" text-anchor="middle" fill="#ffffff" font-size="15">Watch the video</text>
+  </g>
+  <circle cx="698" cy="212" r="46" fill="#29b6a0"/>
+  <path d="M688 192 L717 212 L688 232 Z" fill="#ffffff"/>
+</svg>
