@@ -27,14 +27,14 @@ Each TC identifier names one of the eight test cases. A failed condition blocks 
 
 | Required outcome | Case / suite | Buggy | Fixed |
 |---|---|---|---|
-| Pay only approved, current-period employee totals | TC01 / UI · [Unapproved earnings paid](../Quality%20Control/bug_report/unapproved-earnings-paid-functional.md) | FAIL: $5,100 recorded against $4,350 approved | PASS |
+| Pay only approved, current-period employee totals | TC01 / UI · [Unapproved earnings paid](../Quality%20Control/bug_report/UI%20functional%20bug%20reports/unapproved-earnings-paid-functional.md) | FAIL: $5,100 recorded against $4,350 approved | PASS |
 | Include the opening boundary; pay closing-boundary earnings only in the following period | TC02 / UI | PASS | PASS |
 | Convert timezone offsets to UTC before selecting earnings | TC03 / API | PASS | PASS |
 | Count an identical earning ID once | TC04 / API | PASS | PASS |
 | A failed payment creates no notification; one retry records the unpaid amount once | TC05 / UI | PASS | PASS |
-| Keep successful payment and a Pending notification when delivery fails | TC06 / UI · [Payment without notification](../Quality%20Control/bug_report/payment-saved-without-notification-functional.md) | FAIL: notification instruction absent; delivery failure not reached | PASS |
-| Retry preserves the original payment, amount and linked notification identity | TC07 / UI · [Duplicate payment on retry](../Quality%20Control/bug_report/duplicate-payment-on-pay-run-retry-functional.md) | FAIL: a second payment increases recorded pay to $3,000 | PASS |
-| Save linked notification work for every successful payment | TC08 / UI · [Payment without notification](../Quality%20Control/bug_report/payment-saved-without-notification-functional.md) | FAIL: payment exists without notification work | PASS |
+| Keep successful payment and a Pending notification when delivery fails | TC06 / UI · [Payment without notification](../Quality%20Control/bug_report/UI%20functional%20bug%20reports/payment-saved-without-notification-functional.md) | FAIL: notification instruction absent; delivery failure not reached | PASS |
+| Retry preserves the original payment, amount and linked notification identity | TC07 / UI · [Duplicate payment on retry](../Quality%20Control/bug_report/UI%20functional%20bug%20reports/duplicate-payment-on-pay-run-retry-functional.md) | FAIL: a second payment increases recorded pay to $3,000 | PASS |
+| Save linked notification work for every successful payment | TC08 / UI · [Payment without notification](../Quality%20Control/bug_report/UI%20functional%20bug%20reports/payment-saved-without-notification-functional.md) | FAIL: payment exists without notification work | PASS |
 
 | Build | Browser results | API results | Overall |
 |---|---|---|---|

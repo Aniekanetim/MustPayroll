@@ -1,10 +1,10 @@
 {
-  "id": "mustpayroll-0.2.0-faulty-7e767f8a7ab2",
+  "id": "mustpayroll-0.2.0-faulty-f4ce4b794698",
   "variant": "faulty",
   "defaultPort": 4175,
   "sourceSha256": {
     "LICENSE": "4d84a85a687c00a0665f46932ddd34e903565f1fecdf5efaa2c4a3a6e4d4eb24",
-    "README.md": "25920c0ad4d20002bc84be0ff467647a0c3097ac5d788adf7773e0391d87e491",
+    "README.md": "e0eceb6a49a5efd4284560e29dd0275f25867f0e2a50a62099f1baee4a1c8d1a",
     "index.html": "54691bfa08d2803d519c842d9db5dddf052dfc2bbd6768a36a7ea03dde2ae889",
     "package-lock.json": "28bba692aa2dd177a361294d10137db8b47a9ad9d85506506674a3cc41dcd4ef",
     "package.json": "d6fcea7cdcb3135d18825b136d015f4b47e742153dc226990357fe7a91ad1b9e",
@@ -23,12 +23,12 @@
     "tsconfig.json": "91b3a700b970f3a36ae5b692b6834ad6065b5d9b1ebda529c4db0aaf194d78b4",
     "vite.config.ts": "8a4fe56c6999cfbc10d554eb1923807de6c3c9d36dfabe189cd2eaaf396f9792"
   },
-  "generatedAt": "2026-10-20T05:57:57.369Z",
-  "sourceFingerprint": "7e767f8a7ab20e9782964a4eebae53131ada7d195d68c46ce1d5becf81e01727",
-  "runtimeSha256": "e01af2a817508403cdccccf361a4699f66667e1c9dcd6966cc87a417e6043dd2",
+  "generatedAt": "2026-10-20T09:32:52.764Z",
+  "sourceFingerprint": "f4ce4b7946985715f554117e87b7c679fd5ff7e91702fc913e56ddf1f7094a80",
+  "runtimeSha256": "a741489ee9d186b49ae174da19c35d36ea522f306c2f15fd278a215d1e7ac26e",
   "fileSha256": {
     "LICENSE": "4d84a85a687c00a0665f46932ddd34e903565f1fecdf5efaa2c4a3a6e4d4eb24",
-    "README.md": "25920c0ad4d20002bc84be0ff467647a0c3097ac5d788adf7773e0391d87e491",
+    "README.md": "e0eceb6a49a5efd4284560e29dd0275f25867f0e2a50a62099f1baee4a1c8d1a",
     "dist/assets/index-C95TVCHJ.css": "7486d76bf7fc52d436680986e30214ffc36c7d8d9cdd6bc5bc9f3e51bf6e1955",
     "dist/assets/index-DafYEPmq.js": "92415d48c57e46014ebdff894a95911ea91d7a4f16cac3750ac93a1f9a4e89b2",
     "dist/index.html": "8767d0f24aa8e63f59885074b6fd59c1154b0c8c2bf92bda9165d7c1d127ae0a",
@@ -37,7 +37,7 @@
     "package.json": "d6fcea7cdcb3135d18825b136d015f4b47e742153dc226990357fe7a91ad1b9e",
     "scripts/build.mjs": "10bd55c5253c7cea3e2687860ca6ff791d4f441c36390e72a165add97adf7bad",
     "scripts/dev.mjs": "84e9d509865bcadf84354281d5aa512cc65e916b6bf5660a18673b647e09e692",
-    "server/build-info.mjs": "2d6fa56103950d6924bec0caa9365f248bf05b9f595901c3c07c3d797f8a3a72",
+    "server/build-info.mjs": "673eb257cfb92b645e4ac2b3c9630a6451dd3e61344f1c2c799b0340d8f39c28",
     "server/index.mjs": "b03ced0ecf28a1167ff3c2e56dfdb1bfbb9ca2bf99a2c7d2f0d6e6f4fd5b8b62",
     "server/payment-policy.mjs": "a8bef008748ec0d70e2f12c8df59c55a4a7fe806a31bc4fcfe5aab44da550abb",
     "server/payroll.mjs": "c81354780a4ca8f3ddb7063ae7d067a8959e8b270e26aa7c9d66877fd87ddd48",

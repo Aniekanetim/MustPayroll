@@ -51,7 +51,7 @@ Acceptance: for 13 October 2026, the window is 5 October 00:00 UTC through 12 Oc
 
 **Combine approved earnings correctly.** Sum eligible earnings per employee using whole cents. Within the loaded payroll records, one employee-period payment must equal that employee's frozen approved total.
 
-Acceptance: totals and employee breakdown agree with the saved earnings and payments. No deductions, tax or currency conversion are calculated. The buggy policy omits the approval filter and violates this requirement in TC01; see [PAY-002](../QA/Quality%20Control/bug_report/unapproved-earnings-paid-functional.md).
+Acceptance: totals and employee breakdown agree with the saved earnings and payments. No deductions, tax or currency conversion are calculated. The buggy policy omits the approval filter and violates this requirement in TC01; see [PAY-002](../QA/Quality%20Control/bug_report/UI%20functional%20bug%20reports/unapproved-earnings-paid-functional.md).
 
 ### RUN-01
 
@@ -129,9 +129,9 @@ Acceptance: the same week can accept earnings and run again without old payment 
 
 | Buggy deviation | Required correction in fixed | Cases and report |
 |---|---|---|
-| Pending and Rejected earnings contribute to pay | Select Approved earnings only: RUN-02 | TC01 · [Unapproved earnings paid](../QA/Quality%20Control/bug_report/unapproved-earnings-paid-functional.md) |
-| Payroll retry creates another payment | Check the saved payment and preserve its identity: REC-01 | TC07 · [Duplicate payment on retry](../QA/Quality%20Control/bug_report/duplicate-payment-on-pay-run-retry-functional.md) |
-| Payment has no linked notification instruction | Save both records together and retain failed delivery: REC-02, NOT-01 | TC08 and TC06 · [Payment without notification](../QA/Quality%20Control/bug_report/payment-saved-without-notification-functional.md) |
+| Pending and Rejected earnings contribute to pay | Select Approved earnings only: RUN-02 | TC01 · [Unapproved earnings paid](../QA/Quality%20Control/bug_report/UI%20functional%20bug%20reports/unapproved-earnings-paid-functional.md) |
+| Payroll retry creates another payment | Check the saved payment and preserve its identity: REC-01 | TC07 · [Duplicate payment on retry](../QA/Quality%20Control/bug_report/UI%20functional%20bug%20reports/duplicate-payment-on-pay-run-retry-functional.md) |
+| Payment has no linked notification instruction | Save both records together and retain failed delivery: REC-02, NOT-01 | TC08 and TC06 · [Payment without notification](../QA/Quality%20Control/bug_report/UI%20functional%20bug%20reports/payment-saved-without-notification-functional.md) |
 
 Missing notification work leads into duplicate payment because the buggy completion check relies on a Sent notification. TC06 and TC08 expose the same absent instruction under different delivery conditions. Three defects therefore produce four failed cases. The [defect mapping](../QA/Quality%20assurance/business_rules.md#controlled-defects-and-their-checks) explains the comparison.
 

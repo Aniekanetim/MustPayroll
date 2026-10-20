@@ -46,7 +46,7 @@ Approving or rejecting an earning changes its review status and records an audit
 
 ## Build comparison
 
-Both builds provide the same recording and review controls. Their payment selection differs: buggy can pay Pending and Rejected earnings despite their unchanged statuses; fixed selects only Approved earnings. The [approval defect report](../../QA/Quality%20Control/bug_report/unapproved-earnings-paid-functional.md) shows that comparison, and the [build guide](../README.md#expected-behaviour-and-the-two-builds) explains why both versions are retained.
+Both builds provide the same recording and review controls. Their payment selection differs: buggy can pay Pending and Rejected earnings despite their unchanged statuses; fixed selects only Approved earnings. The [approval defect report](../../QA/Quality%20Control/bug_report/UI%20functional%20bug%20reports/unapproved-earnings-paid-functional.md) shows that comparison, and the [build guide](../README.md#expected-behaviour-and-the-two-builds) explains why both versions are retained.
 
 ## Requirements and verification
 

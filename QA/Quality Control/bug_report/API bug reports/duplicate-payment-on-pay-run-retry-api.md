@@ -12,12 +12,12 @@ A repeated pay-run request for the same employee, earnings and pay period must p
 
 ## Test case that verified the bug
 
-[PAY-001 HTTP verification — payment identity after payroll retry](../Buggy%20build/API%20testing/api-test-suite.md#pay-001-and-pay-003-payment-without-notification-work-followed-by-duplicate-payment).
+[PAY-001 HTTP verification — payment identity after payroll retry](../../Buggy%20build/API%20testing/api-test-suite.md#pay-001-and-pay-003-payment-without-notification-work-followed-by-duplicate-payment).
 
 ## Preconditions
 
 - The buggy service is running at `http://127.0.0.1:4175`.
-- The [buggy Postman collection](../Buggy%20build/API%20testing/postman/MustPayroll.postman_collection.json) is imported, with collection variable `baseUrl` set to `http://127.0.0.1:4175`.
+- The [buggy Postman collection](../../Buggy%20build/API%20testing/postman/MustPayroll.postman_collection.json) is imported, with collection variable `baseUrl` set to `http://127.0.0.1:4175`.
 - POST requests use **Body → raw → JSON** and `Content-Type: application/json`. GET requests have no body. Authentication is not required.
 
 The first request creates a fresh test dataset. Its `payrollDatasetId` is the internal identifier used by subsequent API requests. Save it as instructed in step 1 before continuing.
@@ -61,5 +61,5 @@ The original payment remains, but `payments` contains a second entry for `150000
 
 ## Evidence
 
-- **Buggy observation:** [PAY-001 response check](../Buggy%20build/API%20testing/api-testing-results.md#known-defect-response-checks), recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-faulty-7e767f8a7ab2`.
-- **Fix verification:** [PAY-001 fixed response check](../Fixed%20build/API%20testing/api-testing-results.md#known-defect-response-checks); recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-fixed-34f51cb851c0`. The repeated request retained one $1,500 payment and the original payment and linked notification identities.
+- **Buggy observation:** [PAY-001 response check](../../Buggy%20build/API%20testing/api-testing-results.md#known-defect-response-checks), recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-faulty-f4ce4b794698`.
+- **Fix verification:** [PAY-001 fixed response check](../../Fixed%20build/API%20testing/api-testing-results.md#known-defect-response-checks); recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-fixed-4c4c2fec65d0`. The repeated request retained one $1,500 payment and the original payment and linked notification identities.

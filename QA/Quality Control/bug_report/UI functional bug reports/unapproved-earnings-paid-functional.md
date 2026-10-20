@@ -12,7 +12,7 @@ Only Approved earnings within the selected period should be paid. Processing pay
 
 ## Test case that verified the bug
 
-[TC01 — Approved payroll with excluded earnings](../Buggy%20build/Functional%20testing/functional-test-suite.md).
+[TC01 — Approved payroll with excluded earnings](../../Buggy%20build/Functional%20testing/functional-test-suite.md).
 
 ## Preconditions
 
@@ -55,5 +55,5 @@ Three payments total $5,100: Amara $2,250, Daniel $2,000 and Zara $850. Amara's 
 
 ## Evidence
 
-- **Buggy execution:** [TC01 functional results](../Buggy%20build/Functional%20testing/functional-testing-results.md), recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-faulty-7e767f8a7ab2`.
-- **Fix verification:** [TC01 fixed results](../Fixed%20build/Functional%20testing/functional-testing-results.md), same inputs and expectations; recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-fixed-34f51cb851c0`. The fixed run recorded $4,350 and excluded Pending, Rejected and next-period earnings.
+- **Buggy execution:** [TC01 functional results](../../Buggy%20build/Functional%20testing/functional-testing-results.md), recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-faulty-f4ce4b794698`.
+- **Fix verification:** [TC01 fixed results](../../Fixed%20build/Functional%20testing/functional-testing-results.md), same inputs and expectations; recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-fixed-4c4c2fec65d0`. The fixed run recorded $4,350 and excluded Pending, Rejected and next-period earnings.

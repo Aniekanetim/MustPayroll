@@ -14,7 +14,7 @@ The buggy application records a Paid payment but creates no notification record.
 
 ## Test case that verified the bug
 
-[TC08 — Notification creation for a successful payment](../Buggy%20build/Functional%20testing/functional-test-suite.md) verifies the normal UI flow reproduced below. The recorded TC06 browser run also exposed the same missing-notification defect under a simulated delivery failure.
+[TC08 — Notification creation for a successful payment](../../Buggy%20build/Functional%20testing/functional-test-suite.md) verifies the normal UI flow reproduced below. The recorded TC06 browser run also exposed the same missing-notification defect under a simulated delivery failure.
 
 ## Preconditions
 
@@ -48,5 +48,5 @@ One Paid $1,500 payment exists, but its receipt shows **Not available** for Noti
 
 ## Evidence
 
-- **Buggy execution:** [TC06 and TC08 functional results](../Buggy%20build/Functional%20testing/functional-testing-results.md), recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-faulty-7e767f8a7ab2`.
-- **Fix verification:** [TC06 and TC08 fixed results](../Fixed%20build/Functional%20testing/functional-testing-results.md), same inputs and expectations; recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-fixed-34f51cb851c0`. The fixed TC08 run saved a linked Sent notification; fixed TC06 preserved the payment and its linked Pending notification.
+- **Buggy execution:** [TC06 and TC08 functional results](../../Buggy%20build/Functional%20testing/functional-testing-results.md), recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-faulty-f4ce4b794698`.
+- **Fix verification:** [TC06 and TC08 fixed results](../../Fixed%20build/Functional%20testing/functional-testing-results.md), same inputs and expectations; recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-fixed-4c4c2fec65d0`. The fixed TC08 run saved a linked Sent notification; fixed TC06 preserved the payment and its linked Pending notification.

@@ -12,7 +12,7 @@ MustPayroll must pay each employee once for the same pay period. After the opera
 
 ## Test case that verified the bug
 
-[TC07 — Retrying payroll after payment was recorded](../Buggy%20build/Functional%20testing/functional-test-suite.md).
+[TC07 — Retrying payroll after payment was recorded](../../Buggy%20build/Functional%20testing/functional-test-suite.md).
 
 ## Preconditions
 
@@ -46,5 +46,5 @@ The application retains the original payment and adds another $1,500 payment wit
 
 ## Evidence
 
-- **Buggy execution:** [TC07 functional results](../Buggy%20build/Functional%20testing/functional-testing-results.md), recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-faulty-7e767f8a7ab2`.
-- **Fix verification:** [TC07 fixed results](../Fixed%20build/Functional%20testing/functional-testing-results.md), same inputs and expectations; recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-fixed-34f51cb851c0`. The fixed run retained one $1,500 payment and the original payment and notification identities.
+- **Buggy execution:** [TC07 functional results](../../Buggy%20build/Functional%20testing/functional-testing-results.md), recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-faulty-f4ce4b794698`.
+- **Fix verification:** [TC07 fixed results](../../Fixed%20build/Functional%20testing/functional-testing-results.md), same inputs and expectations; recorded 20 October 2026 UTC; build `mustpayroll-0.2.0-fixed-4c4c2fec65d0`. The fixed run retained one $1,500 payment and the original payment and notification identities.

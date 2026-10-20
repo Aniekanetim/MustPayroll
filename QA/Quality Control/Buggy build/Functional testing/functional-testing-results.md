@@ -1,8 +1,8 @@
 # MustPayroll buggy: UI Functional Results
 
-**Build ID:** mustpayroll-0.2.0-faulty-7e767f8a7ab2
+**Build ID:** mustpayroll-0.2.0-faulty-f4ce4b794698
 
-**Execution:** 2026-10-20T05:58:02.860Z to 2026-10-20T05:59:17.734Z (UTC).
+**Execution:** 2026-10-20T09:32:58.059Z to 2026-10-20T09:34:24.316Z (UTC).
 
 **Method:** Six Chromium journeys using Playwright POM. Technical requests support setup and saved-record checks.
 
@@ -10,7 +10,7 @@
 
 [Build comparison](../../../directive.md#quality-control-results-and-verification-evidence) · [UI case definitions](functional-test-suite.md) · [Runnable Playwright project](executed_functional_test_cases/README.md#run-this-build)
 
-Related defects: TC01 → [PAY-002](../../bug_report/unapproved-earnings-paid-functional.md); TC06 and TC08 → [PAY-003](../../bug_report/payment-saved-without-notification-functional.md); TC07 → [PAY-001](../../bug_report/duplicate-payment-on-pay-run-retry-functional.md).
+Related defects: TC01 → [PAY-002](../../bug_report/UI%20functional%20bug%20reports/unapproved-earnings-paid-functional.md); TC06 and TC08 → [PAY-003](../../bug_report/UI%20functional%20bug%20reports/payment-saved-without-notification-functional.md); TC07 → [PAY-001](../../bug_report/UI%20functional%20bug%20reports/duplicate-payment-on-pay-run-retry-functional.md).
 
 ## Repeat the recorded browser checks
 

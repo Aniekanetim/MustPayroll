@@ -70,14 +70,14 @@ In the fixed build, **Retry pay run** also preserves payments and attempts pendi
 
 ### Payment recorded without notification work
 
-This is a controlled before-and-after demonstration. Prepare equivalent records separately in both applications. For the single-payment example, the selected period contains only Amara's Approved $1,500 earning dated 8 October 2026 at 12:00 UTC, with no payment. Select the 13 October pay date. The [functional duplicate-payment report](../QA/Quality%20Control/bug_report/duplicate-payment-on-pay-run-retry-functional.md) provides the complete browser reproduction.
+This is a controlled before-and-after demonstration. Prepare equivalent records separately in both applications. For the single-payment example, the selected period contains only Amara's Approved $1,500 earning dated 8 October 2026 at 12:00 UTC, with no payment. Select the 13 October pay date. The [functional duplicate-payment report](../QA/Quality%20Control/bug_report/UI%20functional%20bug%20reports/duplicate-payment-on-pay-run-retry-functional.md) provides the complete browser reproduction.
 
 1. In buggy, select **Pay on Tuesday 09:00 UTC** and confirm once. Payments shows a Paid record, while its receipt shows Notification **Not available**.
 2. Open Notifications. No instruction exists for that payment. In this empty-history example, Sent and Pending are zero and **Retry pending notifications** is disabled. TC08 checks this missing instruction.
 3. For the controlled retry demonstration, return to the same Pay runs date and confirm **Retry pay run** once. Buggy adds another $1,500 payment. Retain both references and the $3,000 total. TC07 checks the duplicate.
 4. In fixed, repeat processing and retry with equivalent starting data. One $1,500 payment and one linked Sent notification remain; their original identities are preserved.
 
-Notification-only retry processes existing Pending work and cannot recreate an absent instruction. The operational response is repair while preserving the payment. The [missing-notification report](../QA/Quality%20Control/bug_report/payment-saved-without-notification-functional.md) documents that separate finding.
+Notification-only retry processes existing Pending work and cannot recreate an absent instruction. The operational response is repair while preserving the payment. The [missing-notification report](../QA/Quality%20Control/bug_report/UI%20functional%20bug%20reports/payment-saved-without-notification-functional.md) documents that separate finding.
 
 ### Payment mismatch
 

@@ -33,9 +33,9 @@ The buggy build violates three parts of that flow. The PAY labels identify the d
 
 | Defect | What this build does | Check and report |
 |---|---|---|
-| Pays earnings without approval | Includes Pending and Rejected earnings in the period's payment calculation | TC01 · [PAY-002: unapproved earnings paid](../../QA/Quality%20Control/bug_report/unapproved-earnings-paid-functional.md) |
-| Loses notification work | Saves a payment without saving its linked instruction to notify the employee | TC08 during normal processing; TC06 when delivery failure is configured · [PAY-003: payment without notification](../../QA/Quality%20Control/bug_report/payment-saved-without-notification-functional.md) |
-| Pays again on retry | Treats the employee as unpaid because it checks for a Sent notification instead of the saved payment | TC07 · [PAY-001: duplicate payment on retry](../../QA/Quality%20Control/bug_report/duplicate-payment-on-pay-run-retry-functional.md) |
+| Pays earnings without approval | Includes Pending and Rejected earnings in the period's payment calculation | TC01 · [PAY-002: unapproved earnings paid](../../QA/Quality%20Control/bug_report/UI%20functional%20bug%20reports/unapproved-earnings-paid-functional.md) |
+| Loses notification work | Saves a payment without saving its linked instruction to notify the employee | TC08 during normal processing; TC06 when delivery failure is configured · [PAY-003: payment without notification](../../QA/Quality%20Control/bug_report/UI%20functional%20bug%20reports/payment-saved-without-notification-functional.md) |
+| Pays again on retry | Treats the employee as unpaid because it checks for a Sent notification instead of the saved payment | TC07 · [PAY-001: duplicate payment on retry](../../QA/Quality%20Control/bug_report/UI%20functional%20bug%20reports/duplicate-payment-on-pay-run-retry-functional.md) |
 
 The selected investigation connects the last two defects. A payment succeeds, but its notification instruction is missing. The completion check therefore treats the employee as unpaid, and retry records another payment. This happens during ordinary processing; no service failure or internet disconnection is needed.
 

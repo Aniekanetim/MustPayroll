@@ -39,7 +39,7 @@ The retry control is disabled while a request is in progress or no pending notif
 
 Buggy saves payment without its notification instruction. There is therefore no matching record to deliver or retry, even though payment is Paid. Fixed saves both records together, then produces Sent after successful delivery or retains Pending after failure.
 
-Keeping both versions available lets the same expected notification rule expose the bug and verify its correction. The [browser comparison flow](../user-flows.md#payment-recorded-without-notification-work) demonstrates the missing instruction and subsequent payroll retry. The [functional report](../../QA/Quality%20Control/bug_report/payment-saved-without-notification-functional.md) supplies the browser reproduction; the [build guide](../README.md#expected-behaviour-and-the-two-builds) explains the separate applications.
+Keeping both versions available lets the same expected notification rule expose the bug and verify its correction. The [browser comparison flow](../user-flows.md#payment-recorded-without-notification-work) demonstrates the missing instruction and subsequent payroll retry. The [functional report](../../QA/Quality%20Control/bug_report/UI%20functional%20bug%20reports/payment-saved-without-notification-functional.md) supplies the browser reproduction; the [build guide](../README.md#expected-behaviour-and-the-two-builds) explains the separate applications.
 
 ## Requirements and verification
 

@@ -70,7 +70,7 @@ Compare with the table below. To check the other build, use its own collection a
 | After notification-only retry | Original payment and notification identities retained | One payment remains; notification instruction is still absent |
 | After payroll retry | One original payment; `recordedPaymentTotalCents: 150000`; original linked notification retained | Two distinct payment IDs; `recordedPaymentTotalCents: 300000`; no notifications |
 
-The [PAY-003 API report](../../bug_report/payment-saved-without-notification-api.md) documents notification creation and notification-only retry. Its paired functional report covers TC08 and TC06. The [PAY-001 API report](../../bug_report/duplicate-payment-on-pay-run-retry-api.md) documents duplicate payment after payroll retry; its paired functional report covers TC07. The [bug report index](../../bug_report/README.md) lists the separate functional and API reports.
+The [PAY-003 API report](../../bug_report/API%20bug%20reports/payment-saved-without-notification-api.md) documents notification creation and notification-only retry. Its paired functional report covers TC08 and TC06. The [PAY-001 API report](../../bug_report/API%20bug%20reports/duplicate-payment-on-pay-run-retry-api.md) documents duplicate payment after payroll retry; its paired functional report covers TC07. The [bug report index](../../bug_report/README.md) lists the separate functional and API reports.
 
 ### PAY-002: pending and rejected earnings included in payment
 
@@ -172,4 +172,4 @@ Compare with the table below. To check the other build, use its own collection a
 | Amara’s payment | `150000` ($1,500) | `225000` ($2,250), including the pending bonus and rejected claim |
 | Pending and rejected source records | Remain unchanged and unpaid | Remain unchanged even though their amounts were included in payment |
 
-This is the approval defect covered by TC01. Read the [PAY-002 API report](../../bug_report/unapproved-earnings-paid-api.md) for its reproduction steps and observed outcome. The separate [results comparison](../../../directive.md#quality-control-results-and-verification-evidence) identifies the recorded builds and verification method.
+This is the approval defect covered by TC01. Read the [PAY-002 API report](../../bug_report/API%20bug%20reports/unapproved-earnings-paid-api.md) for its reproduction steps and observed outcome. The separate [results comparison](../../../directive.md#quality-control-results-and-verification-evidence) identifies the recorded builds and verification method.
